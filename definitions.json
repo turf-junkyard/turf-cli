@@ -1,0 +1,2044 @@
+[
+  {
+    "name": "aggregate",
+    "description": "Calculates a series of aggregations for a set of {@link Point} features within a set of {@link Polygon} features. Sum, average, count, min, max, and deviation are supported.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "an array of aggregation objects",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "Array"
+        },
+        "name": "aggregations"
+      }
+    ]
+  },
+  {
+    "name": "along",
+    "description": "Takes a {@link LineString} feature and returns a {@link Point} feature at a specified distance along a line.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a LineString feature",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "LineString"
+        },
+        "name": "line"
+      },
+      {
+        "title": "param",
+        "description": "distance along the line",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "distance"
+      },
+      {
+        "title": "param",
+        "description": "can be degrees, radians, miles, or kilometers",
+        "lineNumber": 7,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "String"
+          }
+        },
+        "name": "units",
+        "default": "miles"
+      }
+    ]
+  },
+  {
+    "name": "area",
+    "description": "Takes a {@link GeoJSON} feature or {@link FeatureCollection} of any type and returns the area of that feature\nin square meters.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a {@link Feature} or {@link FeatureCollection} of any type",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "GeoJSON"
+        },
+        "name": "input"
+      }
+    ]
+  },
+  {
+    "name": "average",
+    "description": "Calculates the average value of a field for a set of {@link Point} features within a set of {@link Polygon} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the field in the `points` features from which to pull values to average",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "field"
+      },
+      {
+        "title": "param",
+        "description": "the field in the `polygons` FeatureCollection to put results of the averages",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "outputField"
+      }
+    ]
+  },
+  {
+    "name": "bboxPolygon",
+    "description": "Takes a bbox and returns the equivalent {@link Polygon} feature.",
+    "params": [
+      {
+        "title": "param",
+        "description": "an Array of bounding box coordinates in the form: ```[xLow, yLow, xHigh, yHigh]```",
+        "lineNumber": 5,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "bbox"
+      }
+    ]
+  },
+  {
+    "name": "bearing",
+    "description": "Takes two {@link Point} features and finds the bearing between them.",
+    "params": [
+      {
+        "title": "param",
+        "description": "starting Point",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "start"
+      },
+      {
+        "title": "param",
+        "description": "ending Point",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "end"
+      }
+    ]
+  },
+  {
+    "name": "bezier",
+    "description": "Takes a {@link LineString} feature and returns a curved version of the line\nby applying a [Bezier spline](http://en.wikipedia.org/wiki/B%C3%A9zier_spline)\nalgorithm.\n\nThe bezier spline implementation is by [Leszek Rybicki](http://leszek.rybicki.cc/).",
+    "params": [
+      {
+        "title": "param",
+        "description": "the input LineString",
+        "lineNumber": 9,
+        "type": {
+          "type": "NameExpression",
+          "name": "LineString"
+        },
+        "name": "line"
+      },
+      {
+        "title": "param",
+        "description": "time in milliseconds between points",
+        "lineNumber": 10,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "number"
+          }
+        },
+        "name": "resolution",
+        "default": "10000"
+      },
+      {
+        "title": "param",
+        "description": "a measure of how curvy the path should be between splines",
+        "lineNumber": 11,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "number"
+          }
+        },
+        "name": "sharpness",
+        "default": "0.85"
+      }
+    ]
+  },
+  {
+    "name": "buffer",
+    "description": "Calculates a buffer for a {@link Point}, {@link LineString}, or {@link Polygon} {@link Feature}/{@link FeatureCollection} for a given radius. Units supported are miles, kilometers, and degrees.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a Feature or FeatureCollection of any type",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "feature"
+      },
+      {
+        "title": "param",
+        "description": "distance to draw the buffer",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "distance"
+      },
+      {
+        "title": "param",
+        "description": "'miles' or 'kilometers'",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "unit"
+      }
+    ]
+  },
+  {
+    "name": "center",
+    "description": "Takes a {@link FeatureCollection} of any type and returns the absolute center point of all features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "features"
+      }
+    ]
+  },
+  {
+    "name": "centroid",
+    "description": "Takes a {@link Feature} or {@link FeatureCollection} of any type and calculates the centroid using the arithmetic mean of all vertices.\nThis lessens the effect of small islands and artifacts when calculating\nthe centroid of a set of polygons.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a {@link Feature} or FeatureCollection of any type",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "GeoJSON"
+        },
+        "name": "features"
+      }
+    ]
+  },
+  {
+    "name": "combine",
+    "description": "Combines a {@link FeatureCollection} of {@link Point}, {@link LineString}, or {@link Polygon} features into {@link MultiPoint}, {@link MultiLineString}, or {@link MultiPolygon} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "fc"
+      }
+    ]
+  },
+  {
+    "name": "concave",
+    "description": "Takes a {@link FeatureCollection} of {@link Point} features and\nreturns a concave hull.\n\nInternally, this implements\na [Monotone chain algorithm](http://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain#JavaScript).",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 9,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the size of an edge necessary for part of the\nhull to become concave (in miles)",
+        "lineNumber": 10,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "maxEdge"
+      },
+      {
+        "title": "param",
+        "description": "used for maxEdge distance (miles or kilometers)",
+        "lineNumber": 12,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "units"
+      }
+    ]
+  },
+  {
+    "name": "convex",
+    "description": "Takes any {@link GeoJSON} object and returns a\n[convex hull](http://en.wikipedia.org/wiki/Convex_hull) polygon.\n\nInternally this uses\nthe [convex-hull](https://github.com/mikolalysenko/convex-hull) module that\nimplements a [monotone chain hull](http://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain).",
+    "params": [
+      {
+        "title": "param",
+        "description": "any GeoJSON object",
+        "lineNumber": 10,
+        "type": {
+          "type": "NameExpression",
+          "name": "GeoJSON"
+        },
+        "name": "input"
+      }
+    ]
+  },
+  {
+    "name": "count",
+    "description": "Takes a {@link FeatureCollection} of {@link Point} features and a {@link FeatureCollection} of {@link Polygon} features and calculates the number of points that fall within the set of polygons.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "a field to append to the attributes of the Polygon features representing Point counts",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "countField"
+      }
+    ]
+  },
+  {
+    "name": "destination",
+    "description": "Takes a {@link Point} feature and calculates the location of a destination point given a distance in degrees, radians, miles, or kilometers; and bearing in degrees. This uses the [Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula) to account for global curvature.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a Point feature at the starting point",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "start"
+      },
+      {
+        "title": "param",
+        "description": "distance from the starting point",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "distance"
+      },
+      {
+        "title": "param",
+        "description": "ranging from -180 to 180",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "bearing"
+      },
+      {
+        "title": "param",
+        "description": "miles, kilometers, degrees, or radians",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "units"
+      }
+    ]
+  },
+  {
+    "name": "deviation",
+    "description": "Calculates the standard deviation value of a field for points within a set of polygons.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the field in `points` from which to aggregate",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "inField"
+      },
+      {
+        "title": "param",
+        "description": "the field to append to `polygons` representing deviation",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "outField"
+      }
+    ]
+  },
+  {
+    "name": "distance",
+    "description": "Takes two {@link Point} features and calculates\nthe distance between them in degress, radians,\nmiles, or kilometers. This uses the\n[Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula)\nto account for global curvature.",
+    "params": [
+      {
+        "title": "param",
+        "description": "origin point",
+        "lineNumber": 9,
+        "type": {
+          "type": "NameExpression",
+          "name": "Feature"
+        },
+        "name": "from"
+      },
+      {
+        "title": "param",
+        "description": "destination point",
+        "lineNumber": 10,
+        "type": {
+          "type": "NameExpression",
+          "name": "Feature"
+        },
+        "name": "to"
+      },
+      {
+        "title": "param",
+        "description": "can be degrees, radians, miles, or kilometers",
+        "lineNumber": 11,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "String"
+          }
+        },
+        "name": "units",
+        "default": "kilometers"
+      }
+    ]
+  },
+  {
+    "name": "envelope",
+    "description": "Takes a {@link Feature} or {@link FeatureCollection} and returns a rectangular {@link Polygon} feature that encompasses all vertices.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "fc"
+      }
+    ]
+  },
+  {
+    "name": "erase",
+    "description": "Finds the difference between two polygons by clipping the second\npolygon from the first.",
+    "params": [
+      {
+        "title": "param",
+        "description": "input Polygon feaure",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "poly1"
+      },
+      {
+        "title": "param",
+        "description": "Polygon feature to erase from `poly1`",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "poly2"
+      }
+    ]
+  },
+  {
+    "name": "explode",
+    "description": "Takes any {@link GeoJSON} object and return all positions as\na {@link FeatureCollection} of {@link Point} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "input features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "GeoJSON"
+        },
+        "name": "input"
+      }
+    ]
+  },
+  {
+    "name": "extent",
+    "description": "Takes any {@link GeoJSON} object, calculates the extent of all input features, and returns a bounding box.",
+    "params": [
+      {
+        "title": "param",
+        "description": "any valid GeoJSON Object",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "GeoJSON"
+        },
+        "name": "input"
+      }
+    ]
+  },
+  {
+    "name": "featurecollection",
+    "description": "Takes one or more {@link Feature|Features} and creates a {@link FeatureCollection}",
+    "params": [
+      {
+        "title": "param",
+        "description": "input Features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Feature"
+        },
+        "name": "features"
+      }
+    ]
+  },
+  {
+    "name": "filter",
+    "description": "Takes a {@link FeatureCollection} and filters it by a given property and value",
+    "params": [
+      {
+        "title": "param",
+        "description": "input FeatureCollection of any type",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "features"
+      },
+      {
+        "title": "param",
+        "description": "the property on which to filter",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "key"
+      },
+      {
+        "title": "param",
+        "description": "the value of that property on which to filter",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "value"
+      }
+    ]
+  },
+  {
+    "name": "flip",
+    "description": "Takes a {@link GeoJSON} object of any type and flips all of its coordinates\nfrom `[x, y]` to `[y, x]`.",
+    "params": [
+      {
+        "title": "param",
+        "description": "input GeoJSON object",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "GeoJSON"
+        },
+        "name": "input"
+      }
+    ]
+  },
+  {
+    "name": "hexGrid",
+    "description": "Takes a bounding box and a cell size in degrees and returns a {@link FeatureCollection} of flat-topped\nhexagons ({@link Polygon} features) aligned in an \"odd-q\" vertical grid as\ndescribed in [Hexagonal Grids](http://www.redblobgames.com/grids/hexagons/)",
+    "params": [
+      {
+        "title": "param",
+        "description": "bounding box in [minX, minY, maxX, maxY] order",
+        "lineNumber": 7,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "bbox"
+      },
+      {
+        "title": "param",
+        "description": "width of cell in specified units",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "cellWidth"
+      },
+      {
+        "title": "param",
+        "description": "used in calculating cellWidth ('miles' or 'kilometers')",
+        "lineNumber": 9,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "units"
+      }
+    ]
+  },
+  {
+    "name": "inside",
+    "description": "Takes a {@link Point} feature and a {@link Polygon} feature and determines if the Point resides inside the Polygon. The Polygon can\nbe convex or concave. The function accepts any valid Polygon or {@link MultiPolygon}\nand accounts for holes.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a Point feature",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "point"
+      },
+      {
+        "title": "param",
+        "description": "a Polygon feature",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "polygon"
+      }
+    ]
+  },
+  {
+    "name": "intersect",
+    "description": "Takes two {@link Polygon} features and finds their intersection.",
+    "params": [
+      {
+        "title": "param",
+        "description": "the first Polygon",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "poly1"
+      },
+      {
+        "title": "param",
+        "description": "the second Polygon",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "poly2"
+      }
+    ]
+  },
+  {
+    "name": "isolines",
+    "description": "Takes a {@link FeatureCollection} of {@link Point} features with z-values and an array of\nvalue breaks and generates [isolines](http://en.wikipedia.org/wiki/Isoline).",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the property name in `points` from which z-values will be pulled",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "z"
+      },
+      {
+        "title": "param",
+        "description": "resolution of the underlying grid",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "resolution"
+      },
+      {
+        "title": "param",
+        "description": "where to draw contours",
+        "lineNumber": 9,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "breaks"
+      }
+    ]
+  },
+  {
+    "name": "jenks",
+    "description": "Takes a {@FeatureCollection} of any type and returns an array of the [Jenks Natural breaks](http://en.wikipedia.org/wiki/Jenks_natural_breaks_optimization)\nfor a given property",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 4,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "input"
+      },
+      {
+        "title": "param",
+        "description": "the property in `input` on which to calculate Jenks natural breaks",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "field"
+      },
+      {
+        "title": "param",
+        "description": "number of classes in which to group the data",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "numberOfBreaks"
+      }
+    ]
+  },
+  {
+    "name": "kinks",
+    "description": "Takes a {@link Polygon} feature and returns a {@link FeatureCollection} of {@link Point} features at all self-intersections.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a Polygon feature",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "polygon"
+      }
+    ]
+  },
+  {
+    "name": "lineDistance",
+    "description": "Takes a {@link LineString} feature and measures its length in the specified units.",
+    "params": [
+      {
+        "title": "param",
+        "description": "to measure",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "LineString"
+        },
+        "name": "Line"
+      },
+      {
+        "title": "param",
+        "description": "can be degrees, radians, miles, or kilometers",
+        "lineNumber": 6,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "String"
+          }
+        },
+        "name": "units",
+        "default": "miles"
+      }
+    ]
+  },
+  {
+    "name": "lineSlice",
+    "description": "Slices a LineString at start and stop Points",
+    "params": [
+      {
+        "title": "param",
+        "description": "to start the slice",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "Point"
+      },
+      {
+        "title": "param",
+        "description": "to stop the slice",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "Point"
+      },
+      {
+        "title": "param",
+        "description": "to slice",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "LineString"
+        },
+        "name": "Line"
+      }
+    ]
+  },
+  {
+    "name": "linestring",
+    "description": "Creates a {@link LineString} {@link Feature} based on a\ncoordinate array. Properties can be added optionally.",
+    "params": [
+      {
+        "title": "param",
+        "description": "an array of Positions",
+        "lineNumber": 6,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              ]
+            }
+          ]
+        },
+        "name": "coordinates"
+      },
+      {
+        "title": "param",
+        "description": "an Object of key-value pairs to add as properties",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "Object"
+        },
+        "name": "properties"
+      }
+    ]
+  },
+  {
+    "name": "max",
+    "description": "Calculates the maximum value of a field for a set of {@link Point} features within a set of {@link Polygon} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the field in input data to analyze",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "inField"
+      },
+      {
+        "title": "param",
+        "description": "the field in which to store results",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "outField"
+      }
+    ]
+  },
+  {
+    "name": "median",
+    "description": "Calculates the median value of a field for a set of {@link Point} features within a set of {@link Polygon} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the field in input data to analyze",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "inField"
+      },
+      {
+        "title": "param",
+        "description": "the field in which to store results",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "outField"
+      }
+    ]
+  },
+  {
+    "name": "merge",
+    "description": "Takes a {@link FeatureCollection} of {@link Polygon} features and returns a single merged\npolygon feature. If the input Polygon features are not contiguous, this function returns a {@link MultiPolygon} feature.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "fc"
+      }
+    ]
+  },
+  {
+    "name": "midpoint",
+    "description": "Takes two {@link Point} features and returns a Point midway between the two.",
+    "params": [
+      {
+        "title": "param",
+        "description": "first point",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "pt1"
+      },
+      {
+        "title": "param",
+        "description": "second point",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "pt2"
+      }
+    ]
+  },
+  {
+    "name": "min",
+    "description": "Calculates the minimum value of a field for {@link Point} features within a set of {@link Polygon} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the field in input data to analyze",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "inField"
+      },
+      {
+        "title": "param",
+        "description": "the field in which to store results",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "outField"
+      }
+    ]
+  },
+  {
+    "name": "nearest",
+    "description": "Takes a {@link Point} feature and a {@link FeatureCollection} of Point features and returns the Point feature from the FeatureCollection closest to the input point.",
+    "params": [
+      {
+        "title": "param",
+        "description": "the reference point",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "point"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of Point features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "against"
+      }
+    ]
+  },
+  {
+    "name": "planepoint",
+    "description": "Takes a triangular plane as a {@link Polygon} feature\nand a {@link Point} feature within that triangle and returns the z-value\nat that point. The Polygon needs to have properties `a`, `b`, and `c`\nthat define the values at its three corners.",
+    "params": [
+      {
+        "title": "param",
+        "description": "the Point for which a z-value will be calculated",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "interpolatedPoint"
+      },
+      {
+        "title": "param",
+        "description": "a Polygon feature with three vertices",
+        "lineNumber": 9,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "triangle"
+      }
+    ]
+  },
+  {
+    "name": "point",
+    "description": "Takes coordinates and properties (optional) and returns a new {@link Point} feature.",
+    "params": [
+      {
+        "title": "param",
+        "description": "position west to east in decimal degrees",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "longitude"
+      },
+      {
+        "title": "param",
+        "description": "position south to north in decimal degrees",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "latitude"
+      },
+      {
+        "title": "param",
+        "description": "an Object that is used as the {@link Feature}'s\nproperties",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "Object"
+        },
+        "name": "properties"
+      }
+    ]
+  },
+  {
+    "name": "pointGrid",
+    "description": "Takes a bounding box and a cell depth and returns a {@link FeatureCollection} of {@link Point} features in a grid.",
+    "params": [
+      {
+        "title": "param",
+        "description": "extent in [minX, minY, maxX, maxY] order",
+        "lineNumber": 5,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "extent"
+      },
+      {
+        "title": "param",
+        "description": "how many cells to output",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "depth"
+      }
+    ]
+  },
+  {
+    "name": "pointOnLine",
+    "description": "Takes a Point and a LineString and calculates the closest Point on the LineString",
+    "params": [
+      {
+        "title": "param",
+        "description": "to snap to",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "LineString"
+        },
+        "name": "Line"
+      },
+      {
+        "title": "param",
+        "description": "to snap from",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Point"
+        },
+        "name": "Point"
+      }
+    ]
+  },
+  {
+    "name": "pointOnSurface",
+    "description": "Finds a {@link Point} guaranteed to be on the surface of\n{@link GeoJSON} object.\n\n* Given a {@link Polygon}, the point will be in the area of the polygon\n* Given a {@link LineString}, the point will be along the string\n* Given a {@link Point}, the point will the same as the input",
+    "params": [
+      {
+        "title": "param",
+        "description": "any GeoJSON object",
+        "lineNumber": 10,
+        "type": {
+          "type": "NameExpression",
+          "name": "GeoJSON"
+        },
+        "name": "input"
+      }
+    ]
+  },
+  {
+    "name": "polygon",
+    "description": "Takes an array of LinearRings and optionally an {@link Object} with properties and returns a GeoJSON {@link Polygon} feature.",
+    "params": [
+      {
+        "title": "param",
+        "description": "an array of LinearRings",
+        "lineNumber": 5,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              ]
+            }
+          ]
+        },
+        "name": "rings"
+      },
+      {
+        "title": "param",
+        "description": "an optional properties object",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Object"
+        },
+        "name": "properties"
+      }
+    ]
+  },
+  {
+    "name": "quantile",
+    "description": "Takes a {@link FeatureCollection}, a property name, and a set of percentiles and returns a quantile array.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 4,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "input"
+      },
+      {
+        "title": "param",
+        "description": "the property in `input` from which to retrieve quantile values",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "field"
+      },
+      {
+        "title": "param",
+        "description": "an Array of percentiles on which to calculate quantile values",
+        "lineNumber": 6,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "percentiles"
+      }
+    ]
+  },
+  {
+    "name": "random",
+    "description": "Generates random {@link GeoJSON} data, including {@link Point|Points} and {@link Polygon|Polygons}, for testing\nand experimentation.",
+    "params": [
+      {
+        "title": "param",
+        "description": "type of features desired: 'points' or 'polygons'",
+        "lineNumber": 6,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "String"
+          }
+        },
+        "name": "type",
+        "default": "'point'"
+      },
+      {
+        "title": "param",
+        "description": "how many geometries should be generated.",
+        "lineNumber": 7,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Number"
+          }
+        },
+        "name": "count",
+        "default": "1"
+      },
+      {
+        "title": "param",
+        "description": "options relevant to the feature desired. Can include:",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "Object"
+        },
+        "name": "options",
+        "properties": [
+          {
+            "title": "param",
+            "description": "a bounding box inside of which geometries\nare placed. In the case of {@link Point} features, they are guaranteed to be within this bounds,\nwhile {@link Polygon} features have their centroid within the bounds.",
+            "lineNumber": 9,
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              ]
+            },
+            "name": "options.bbox"
+          },
+          {
+            "title": "param",
+            "description": "options.vertices the number of vertices added\nto polygon features.",
+            "lineNumber": 12,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Number"
+              }
+            },
+            "name": "options.num_vertices",
+            "default": "10"
+          },
+          {
+            "title": "param",
+            "description": "the total number of decimal\ndegrees longitude or latitude that a polygon can extent outwards to\nfrom its center.",
+            "lineNumber": 14,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Number"
+              }
+            },
+            "name": "options.max_radial_length",
+            "default": "10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "reclass",
+    "description": "Takes a {@link FeatureCollection}, an input field, an output field, and\nan array of translations and outputs an identical FeatureCollection with\nthe output field property populated.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "input"
+      },
+      {
+        "title": "param",
+        "description": "the field to translate",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "inField"
+      },
+      {
+        "title": "param",
+        "description": "the field in which to store translated results",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "outField"
+      },
+      {
+        "title": "param",
+        "description": "an array of translations",
+        "lineNumber": 9,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "translations"
+      }
+    ]
+  },
+  {
+    "name": "remove",
+    "description": "Takes a {@link FeatureCollection} of any type, a property, and a value and\nreturns a FeatureCollection with features matching that\nproperty-value pair removed.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "features"
+      },
+      {
+        "title": "param",
+        "description": "the property to filter",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "property"
+      },
+      {
+        "title": "param",
+        "description": "the value to filter",
+        "lineNumber": 9,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "value"
+      }
+    ]
+  },
+  {
+    "name": "sample",
+    "description": "Takes a {@link FeatureCollection} and returns a FeatureCollection with given number of {@link Feature|features} at random.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of any type",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "features"
+      },
+      {
+        "title": "param",
+        "description": "number of features to select",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "n"
+      }
+    ]
+  },
+  {
+    "name": "simplify",
+    "description": "Takes a {@link LineString} or {@link Polygon} feature and returns a simplified version. Internally uses [simplify-js](http://mourner.github.io/simplify-js/) to perform simplification.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a {@link LineString} or {@link Polygon} feature to be simplified",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Feature"
+        },
+        "name": "feature"
+      },
+      {
+        "title": "param",
+        "description": "simplification tolerance",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "tolerance"
+      },
+      {
+        "title": "param",
+        "description": "whether or not to spend more time to create\na higher-quality simplification with a different algorithm",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "boolean"
+        },
+        "name": "highQuality"
+      }
+    ]
+  },
+  {
+    "name": "size",
+    "description": "Takes a bounding box and returns a new bounding box with a size expanded or contracted\nby a factor of X.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a bounding box",
+        "lineNumber": 6,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "bbox"
+      },
+      {
+        "title": "param",
+        "description": "the ratio of the new bbox to the input bbox",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "number"
+        },
+        "name": "factor"
+      }
+    ]
+  },
+  {
+    "name": "square",
+    "description": "Takes a bounding box and calculates the minimum square bounding box that would contain the input.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a bounding box",
+        "lineNumber": 5,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "bbox"
+      }
+    ]
+  },
+  {
+    "name": "squareGrid",
+    "description": "Takes a bounding box and a cell depth and returns a {@link FeatureCollection} of {@link Polygon} features in a grid.",
+    "params": [
+      {
+        "title": "param",
+        "description": "extent in [minX, minY, maxX, maxY] order",
+        "lineNumber": 5,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "extent"
+      },
+      {
+        "title": "param",
+        "description": "width of each cell",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "cellWidth"
+      },
+      {
+        "title": "param",
+        "description": "units to use for cellWidth",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "units"
+      }
+    ]
+  },
+  {
+    "name": "sum",
+    "description": "Calculates the sum of a field for {@link Point} features within a set of {@link Polygon} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the field in input data to analyze",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "inField"
+      },
+      {
+        "title": "param",
+        "description": "the field in which to store results",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "outField"
+      }
+    ]
+  },
+  {
+    "name": "tag",
+    "description": "Takes a {@link FeatureCollection} of {@link Point} features and a FeatureCollection of {@link Polygon} features and performs a spatial join.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "property in `polygons` to add to joined Point features",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "polyId"
+      },
+      {
+        "title": "param",
+        "description": "property in `points` in which to store joined property from `polygons",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "containingPolyId"
+      }
+    ]
+  },
+  {
+    "name": "tin",
+    "description": "Takes a set of points and the name of a z-value property and\ncreates a [Triangulated Irregular Network](http://en.wikipedia.org/wiki/Triangulated_irregular_network),\nor a TIN for short, returned as a collection of Polygons. These are often used\nfor developing elevation contour maps or stepped heat visualizations.\n\nThis triangulates the points, as well as adds properties called `a`, `b`,\nand `c` representing the value of the given `propertyName` at each of\nthe points that represent the corners of the triangle.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a GeoJSON FeatureCollection containing\nFeatures with {@link Point} geometries",
+        "lineNumber": 12,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "name of the property from which to pull z values.\nThis is optional: if not given, then there will be no extra data added to the derived triangles.",
+        "lineNumber": 14,
+        "type": {
+          "type": "OptionalType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "string"
+          }
+        },
+        "name": "propertyName"
+      }
+    ]
+  },
+  {
+    "name": "triangleGrid",
+    "description": "Takes a bounding box and a cell depth and returns a {@link FeatureCollection} of {@link Polygon} features in a grid.",
+    "params": [
+      {
+        "title": "param",
+        "description": "extent in [minX, minY, maxX, maxY] order",
+        "lineNumber": 5,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Array"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "number"
+            }
+          ]
+        },
+        "name": "extent"
+      },
+      {
+        "title": "param",
+        "description": "width of each cell",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Number"
+        },
+        "name": "cellWidth"
+      },
+      {
+        "title": "param",
+        "description": "units to use for cellWidth",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "String"
+        },
+        "name": "units"
+      }
+    ]
+  },
+  {
+    "name": "union",
+    "description": "Takes two {@link Polygon} features and returnes a combined {@link Polygon} feature. If the input Polygon features are not contiguous, this function returns a {@link MultiPolygon} feature.",
+    "params": [
+      {
+        "title": "param",
+        "description": "an input Polygon",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "poly1"
+      },
+      {
+        "title": "param",
+        "description": "another input Polygon",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Polygon"
+        },
+        "name": "poly2"
+      }
+    ]
+  },
+  {
+    "name": "variance",
+    "description": "Calculates the variance value of a field for {@link Point} features within a set of {@link Polygon} features.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "the field in input data to analyze",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "inField"
+      },
+      {
+        "title": "param",
+        "description": "the field in which to store results",
+        "lineNumber": 8,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "outField"
+      }
+    ]
+  },
+  {
+    "name": "within",
+    "description": "Takes a {@link FeatureCollection} of {@link Point} features and a FeatureCollection of {@link Polygon} features and returns a FeatureCollection of Point features representing all points that fall within a collection of polygons.",
+    "params": [
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Point} features",
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "points"
+      },
+      {
+        "title": "param",
+        "description": "a FeatureCollection of {@link Polygon} features",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "FeatureCollection"
+        },
+        "name": "polygons"
+      }
+    ]
+  }
+]
