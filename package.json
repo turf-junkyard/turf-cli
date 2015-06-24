@@ -5,14 +5,15 @@
   "main": "index.js",
   "dependencies": {
     "chalk": "^1.0.0",
+    "minimist": "^1.1.1",
+    "turf": "^2.0.2"
+  },
+  "devDependencies": {
     "glob": "^5.0.10",
     "camelcase": "^1.1.0",
-    "minimist": "^1.1.1",
     "queue-async": "^1.0.7",
-    "turf": "^2.0.2",
     "runtime-documentation": "^1.0.0"
   },
-  "devDependencies": {},
   "bin": {
     "turf": "cli.js"
   },
