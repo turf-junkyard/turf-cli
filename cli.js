@@ -10,10 +10,11 @@ var turf = require('turf'),
 
 function isFileArgument(type) {
     return type.type === 'NameExpression' &&
-        ['FeatureCollection', 'Point', 'GeoJSON', 'Geometry',
+        ['FeatureCollection', 'Feature', 'Point', 'GeoJSON', 'Geometry',
          'LineString', 'Polygon', 'MultiPolygon', 'MultiPoint']
          .indexOf(type.name) !== -1;
 }
+
 
 function parseArguments(def, argv) {
     if ((argv._.length - 1) !== def.params.length) {
