@@ -10,9 +10,16 @@ var turf = require('turf'),
 
 function isFileArgument(type) {
     return type.type === 'NameExpression' &&
-        ['FeatureCollection', 'Point', 'GeoJSON', 'Geometry',
+        ['FeatureCollection', 'Feature', 'Point', 'GeoJSON', 'Geometry',
          'LineString', 'Polygon', 'MultiPolygon', 'MultiPoint']
          .indexOf(type.name) !== -1;
+}
+
+function isJsonArgument(type) {
+    return (type.type === 'NameExpression' &&
+                (type.name === 'Object' || type.name === 'boolean')) ||
+            (type.type === 'TypeApplication' &&
+                type.expression.name === 'Array');
 }
 
 function parseArguments(def, argv) {
@@ -27,6 +34,8 @@ function parseArguments(def, argv) {
         var arg = argv._[i + 1];
         if (isFileArgument(param.type)) {
             args.push(JSON.parse(fs.readFileSync(arg)));
+        } else if (isJsonArgument(param.type)) {
+            args.push(JSON.parse(arg));
         } else {
             args.push(arg);
         }
