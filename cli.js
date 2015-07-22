@@ -15,6 +15,12 @@ function isFileArgument(type) {
          .indexOf(type.name) !== -1;
 }
 
+function isJsonArgument(type) {
+    return (type.type === 'NameExpression' &&
+                (type.name === 'Object' || type.name === 'boolean')) ||
+            (type.type === 'TypeApplication' &&
+                type.expression.name === 'Array');
+}
 
 function parseArguments(def, argv) {
     if ((argv._.length - 1) !== def.params.length) {
@@ -28,6 +34,8 @@ function parseArguments(def, argv) {
         var arg = argv._[i + 1];
         if (isFileArgument(param.type)) {
             args.push(JSON.parse(fs.readFileSync(arg)));
+        } else if (isJsonArgument(param.type)) {
+            args.push(JSON.parse(arg));
         } else {
             args.push(arg);
         }
