@@ -48,10 +48,18 @@ function parseArguments(def, argv, stdin) {
     return args;
 }
 
+var usedStdin = false
 function  getJsonFromArg (arg, stdin) {
+    if (arg === '-' && usedStdin) {
+        console.log('STDIN ("-") can only be used once for JSON/GeoJSON input');
+        showParams(def.params);
+        throw new Error('stdin used for multiple file arguments');
+    }
+
     var raw
     if (arg === '-') {
         raw = stdin
+        usedStdin = true
     } else {
       try {
           // throws for a nonexistent file
