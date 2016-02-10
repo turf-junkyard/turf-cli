@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "chalk": "^1.0.0",
+    "get-stdin": "^5.0.1",
     "minimist": "^1.1.1",
     "turf": "^2.0.2"
   },

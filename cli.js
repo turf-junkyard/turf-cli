@@ -3,12 +3,13 @@
 var turf = require('turf'),
     chalk = require('chalk'),
     fs = require('fs'),
+    getStdin = require('get-stdin'),
     defs = require('./definitions.json'),
     argv = require('minimist')(process.argv.slice(2), {
         boolean: ['h', 'help']
     });
 
-function isFileArgument(type) {
+function isGeoJsonArgument(type) {
     return type.type === 'NameExpression' &&
         ['FeatureCollection', 'Feature', 'Point', 'GeoJSON', 'Geometry',
          'LineString', 'Polygon', 'MultiPolygon', 'MultiPoint']
@@ -17,12 +18,16 @@ function isFileArgument(type) {
 
 function isJsonArgument(type) {
     return (type.type === 'NameExpression' &&
-                (type.name === 'Object' || type.name === 'boolean')) ||
+                type.name === 'Object') ||
             (type.type === 'TypeApplication' &&
                 type.expression.name === 'Array');
 }
 
-function parseArguments(def, argv) {
+function isBooleanArgument(type) {
+    return type.type === 'NameExpression' && type.name === 'boolean';
+}
+
+function parseArguments(def, argv, stdin) {
     if ((argv._.length - 1) !== def.params.length) {
         console.log('Definition %s requires %s arguments, given %s',
                     def.name, def.params.length, argv._.length - 1);
@@ -32,15 +37,44 @@ function parseArguments(def, argv) {
     var args = [];
     def.params.forEach(function(param, i) {
         var arg = argv._[i + 1];
-        if (isFileArgument(param.type)) {
-            args.push(JSON.parse(fs.readFileSync(arg)));
-        } else if (isJsonArgument(param.type)) {
-            args.push(JSON.parse(arg));
+        if (isGeoJsonArgument(param.type) || isJsonArgument(param.type)) {
+            args.push(getJsonFromArg(arg, stdin));
+        } else if (isBooleanArgument(param.type)) {
+            args.push(JSON.parse(arg)); // parses 'false' to false
         } else {
             args.push(arg);
         }
     });
     return args;
+}
+
+var usedStdin = false
+function  getJsonFromArg (arg, stdin) {
+    if (arg === '-' && usedStdin) {
+        console.log('STDIN ("-") can only be used once for JSON/GeoJSON input');
+        showParams(def.params);
+        throw new Error('stdin used for multiple file arguments');
+    }
+
+    var raw
+    if (arg === '-') {
+        raw = stdin
+        usedStdin = true
+    } else {
+      try {
+          // throws for a nonexistent file
+          raw = fs.readFileSync(arg)
+      } catch (e) {
+          // if `arg` doesn't point to a file, fall back to treating it as literal JSON
+          raw = arg
+      }
+    }
+
+    try {
+        return JSON.parse(raw);
+    } catch (e) {
+        console.log("Could not parse JSON: ", raw);
+    }
 }
 
 function showParams(params) {
@@ -77,6 +111,8 @@ function help() {
         throw new Error('turf operation ' + op + ' not found');
     }
     var def = getDef(argv._[0]);
-    var args = parseArguments(def, argv);
-    console.log(JSON.stringify(turf[op].apply(null, args), null, 2));
+    getStdin().then(function (stdin) {
+        var args = parseArguments(def, argv, stdin);
+        console.log(JSON.stringify(turf[op].apply(null, args), null, 2));
+    });
 })();
