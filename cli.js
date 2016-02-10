@@ -8,30 +8,18 @@ var turf = require('turf'),
         boolean: ['h', 'help']
     });
 
-var geoJsonTypes = [
-  'FeatureCollection',
-  'Point',
-  'GeoJSON',
-  'Geometry',
-  'LineString',
-  'Polygon',
-  'MultiPolygon',
-  'MultiPoint'
-];
+function isFileArgument(type) {
+    return type.type === 'NameExpression' &&
+        ['FeatureCollection', 'Feature', 'Point', 'GeoJSON', 'Geometry',
+         'LineString', 'Polygon', 'MultiPolygon', 'MultiPoint']
+         .indexOf(type.name) !== -1;
+}
 
-function cast(type, value) {
-    if (type.type === 'TypeApplication' &&
-      type.expression.name === 'Array') {
-      return value.slice(1, -1).split(',')
-        .map(cast.bind(null, type.applications[0]))
-    } else if (type.type === 'NameExpression' &&
-      /number/i.test(type.name)) {
-        return Number(value);
-    } else if (type.type === 'NameExpression' &&
-      geoJsonTypes.indexOf(type.name) !== -1) {
-      return JSON.parse(fs.readFileSync(value));
-    }
-    else return value;
+function isJsonArgument(type) {
+    return (type.type === 'NameExpression' &&
+                (type.name === 'Object' || type.name === 'boolean')) ||
+            (type.type === 'TypeApplication' &&
+                type.expression.name === 'Array');
 }
 
 function parseArguments(def, argv) {
@@ -44,7 +32,13 @@ function parseArguments(def, argv) {
     var args = [];
     def.params.forEach(function(param, i) {
         var arg = argv._[i + 1];
-        args.push(cast(param.type, arg))
+        if (isFileArgument(param.type)) {
+            args.push(JSON.parse(fs.readFileSync(arg)));
+        } else if (isJsonArgument(param.type)) {
+            args.push(JSON.parse(arg));
+        } else {
+            args.push(arg);
+        }
     });
     return args;
 }
