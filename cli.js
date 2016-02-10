@@ -3,12 +3,13 @@
 var turf = require('turf'),
     chalk = require('chalk'),
     fs = require('fs'),
+    getStdin = require('get-stdin'),
     defs = require('./definitions.json'),
     argv = require('minimist')(process.argv.slice(2), {
         boolean: ['h', 'help']
     });
 
-function isFileArgument(type) {
+function isGeoJsonArgument(type) {
     return type.type === 'NameExpression' &&
         ['FeatureCollection', 'Feature', 'Point', 'GeoJSON', 'Geometry',
          'LineString', 'Polygon', 'MultiPolygon', 'MultiPoint']
@@ -22,7 +23,7 @@ function isJsonArgument(type) {
                 type.expression.name === 'Array');
 }
 
-function parseArguments(def, argv) {
+function parseArguments(def, argv, stdin) {
     if ((argv._.length - 1) !== def.params.length) {
         console.log('Definition %s requires %s arguments, given %s',
                     def.name, def.params.length, argv._.length - 1);
@@ -32,15 +33,30 @@ function parseArguments(def, argv) {
     var args = [];
     def.params.forEach(function(param, i) {
         var arg = argv._[i + 1];
-        if (isFileArgument(param.type)) {
-            args.push(JSON.parse(fs.readFileSync(arg)));
-        } else if (isJsonArgument(param.type)) {
-            args.push(JSON.parse(arg));
+        if (isGeoJsonArgument(param.type) || isJsonArgument(param.type)) {
+            args.push(getJsonFromArg(arg, stdin));
         } else {
             args.push(arg);
         }
     });
     return args;
+}
+
+function  getJsonFromArg (arg, stdin) {
+    var raw
+    if (arg === '-') {
+        raw = JSON.parse(stdin)
+    }
+
+    try {
+        // throws for a nonexistent file
+        raw = fs.readFileSync(arg)
+    } catch (e) {
+        // if `arg` doesn't point to a file, fall back to treating it as literal JSON
+        raw = arg
+    }
+
+    return JSON.parse(raw)
 }
 
 function showParams(params) {
@@ -77,6 +93,8 @@ function help() {
         throw new Error('turf operation ' + op + ' not found');
     }
     var def = getDef(argv._[0]);
-    var args = parseArguments(def, argv);
-    console.log(JSON.stringify(turf[op].apply(null, args), null, 2));
+    getStdin().then(function (stdin) {
+        var args = parseArguments(def, argv, stdin);
+        console.log(JSON.stringify(turf[op].apply(null, args), null, 2));
+    });
 })();
