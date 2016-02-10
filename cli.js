@@ -38,7 +38,7 @@ function parseArguments(def, argv, stdin) {
     def.params.forEach(function(param, i) {
         var arg = argv._[i + 1];
         if (isGeoJsonArgument(param.type) || isJsonArgument(param.type)) {
-            args.push(getJsonFromArg(arg, stdin));
+            args.push(getJsonFromArg(def, arg, stdin));
         } else if (isBooleanArgument(param.type)) {
             args.push(JSON.parse(arg)); // parses 'false' to false
         } else {
@@ -49,7 +49,7 @@ function parseArguments(def, argv, stdin) {
 }
 
 var usedStdin = false
-function  getJsonFromArg (arg, stdin) {
+function getJsonFromArg(def, arg, stdin) {
     if (arg === '-' && usedStdin) {
         console.log('STDIN ("-") can only be used once for JSON/GeoJSON input');
         showParams(def.params);
