@@ -18,9 +18,13 @@ function isGeoJsonArgument(type) {
 
 function isJsonArgument(type) {
     return (type.type === 'NameExpression' &&
-                (type.name === 'Object' || type.name === 'boolean')) ||
+                type.name === 'Object') ||
             (type.type === 'TypeApplication' &&
                 type.expression.name === 'Array');
+}
+
+function isBooleanArgument(type) {
+    return type.type === 'NameExpression' && type.name === 'boolean'
 }
 
 function parseArguments(def, argv, stdin) {
@@ -35,6 +39,8 @@ function parseArguments(def, argv, stdin) {
         var arg = argv._[i + 1];
         if (isGeoJsonArgument(param.type) || isJsonArgument(param.type)) {
             args.push(getJsonFromArg(arg, stdin));
+        } else if (isBooleanArgument(param.type)) {
+            args.push(JSON.parse(arg)); // parses 'false' to false
         } else {
             args.push(arg);
         }
