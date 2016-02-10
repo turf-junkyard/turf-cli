@@ -24,7 +24,7 @@ function isJsonArgument(type) {
 }
 
 function isBooleanArgument(type) {
-    return type.type === 'NameExpression' && type.name === 'boolean'
+    return type.type === 'NameExpression' && type.name === 'boolean';
 }
 
 function parseArguments(def, argv, stdin) {
@@ -51,18 +51,22 @@ function parseArguments(def, argv, stdin) {
 function  getJsonFromArg (arg, stdin) {
     var raw
     if (arg === '-') {
-        raw = JSON.parse(stdin)
+        raw = stdin
+    } else {
+      try {
+          // throws for a nonexistent file
+          raw = fs.readFileSync(arg)
+      } catch (e) {
+          // if `arg` doesn't point to a file, fall back to treating it as literal JSON
+          raw = arg
+      }
     }
 
     try {
-        // throws for a nonexistent file
-        raw = fs.readFileSync(arg)
+        return JSON.parse(raw);
     } catch (e) {
-        // if `arg` doesn't point to a file, fall back to treating it as literal JSON
-        raw = arg
+        console.log("Could not parse JSON: ", raw);
     }
-
-    return JSON.parse(raw)
 }
 
 function showParams(params) {
